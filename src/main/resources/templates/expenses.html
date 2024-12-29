@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expenses List</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Expenses List</h1>
+    </header>
+    <main>
+        <section id="expense-list">
+            <h2>Expenses</h2>
+            <ul>
+                <li th:each="expense : ${expenses}">
+                    <span th:text="${expense.description}">Description</span> -
+                    <span th:text="${expense.amount}">Amount</span> -
+                    <span th:text="${expense.date}">Date</span>
+                    <form th:action="@{/expenses/{id}(id=${expense.id})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

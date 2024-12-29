@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Expenses Tracker</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Personal Expenses Tracker</h1>
+    </header>
+    <main>
+        <section id="expense-form">
+            <h2>Add Expense</h2>
+            <form th:action="@{/expenses}" th:object="${expense}" method="post">
+                <input type="text" th:field="*{description}" placeholder="Description" required>
+                <input type="number" th:field="*{amount}" placeholder="Amount" required>
+                <input type="date" th:field="*{date}" required>
+                <button type="submit">Add Expense</button>
+            </form>
+        </section>
+        <section id="expense-list">
+            <h2>Expenses</h2>
+            <ul>
+                <li th:each="expense : ${expenses}">
+                    <span th:text="${expense.description}">Description</span> -
+                    <span th:text="${expense.amount}">Amount</span> -
+                    <span th:text="${expense.date}">Date</span>
+                    <form th:action="@{/expenses/{id}(id=${expense.id})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
